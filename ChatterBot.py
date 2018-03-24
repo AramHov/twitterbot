@@ -1,14 +1,10 @@
 # Dependencies
+
 import tweepy
 import json
-import numpy as np
-import os
 import time
-
-# Import and Initialize Sentiment Analyzer
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-analyzer = SentimentIntensityAnalyzer()
-
+import os
+import random
 # Twitter API Keys
 
 consumer_key=os.environ['consumer_key']
@@ -17,29 +13,33 @@ access_token=os.environt['access_token']
 access_token_secret=os.environ['access_token_secret']
 
 
-# Setup Tweepy API Authentication
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
+# Twitter credentials
+auth = tweepy.OAuthHandler(Consumer_Key, Consumer_Secret)
+auth.set_access_token(Access_Token, Access_Token_Secret)
 api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 
-# Create a function that tweets
-def TweetOut(tweet_number):
-    api.update_status(
-        "Can't stop. Won't stop. Chatting! This is Tweet #%s!" %
-        tweet_number)
+# Quotes to Tweet
+happy_quotes = [
+    "hello. - Ralph Waldo Emerson",
+    "usually about as happy as they make their minds up to be. - Abraham Lincoln",
+    "hink, what you say, and what you do are in harmony. - Mahatma Gandhi",
+    "Cears. Count your life by smiles, not tears. - John Lennon",
+    "Happin- Charles M. Schulz",
+    "The hdepends upon the quality of your thoughts. - Marcus Aurelius",
+    "Now andin our pursuit of happiness and laume Apollinaire"]
 
 
-# Create a function that calls the TweetOut function every minute
-counter = 0
+# Create function for tweeting
+def HappyItUp():
 
-# Infinitely loop
+    # Tweet a random quote
+    api.update_status(random.choice(happy_quotes))
+
+    # Print success message
+    print("Tweeted successfully, sir!")
+
+
+# Set timer to run every minute
 while(True):
-
-    # Call the TweetQuotes function and specify the tweet number
-    TweetOut(counter)
-
-    # Once tweeted, wait 60 seconds before doing anything else
+    HappyItUp()
     time.sleep(60)
-
-    # Add 1 to the counter prior to re-running the loop
-    counter = counter + 1
